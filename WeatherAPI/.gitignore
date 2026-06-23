@@ -1,0 +1,10 @@
+﻿# Banned local secrets
+appsettings.Development.json
+
+# Banned compilation files
+bin/
+obj/
+
+# Banned IDE configuration settings
+.idea/
+.vs/

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
-using WeatherAPI.ExtensionHandler;
+using WeatherAPI.ExceptionHandler;
 using WeatherAPI.Model;
 
 namespace WeatherAPI.Service;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WeatherAPI.ExtensionHandler;
+using WeatherAPI.ExceptionHandler;
 using WeatherAPI.Model;
 using WeatherAPI.Service;
 

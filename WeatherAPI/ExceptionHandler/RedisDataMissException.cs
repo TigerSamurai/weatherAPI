@@ -1,4 +1,4 @@
-﻿namespace WeatherAPI.ExtensionHandler;
+﻿namespace WeatherAPI.ExceptionHandler;
 
 public class RedisDataMissException : Exception
 {

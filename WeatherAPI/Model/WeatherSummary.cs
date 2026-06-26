@@ -1,4 +1,4 @@
-﻿namespace WeatherAPI.Properties;
+﻿namespace WeatherAPI.Model;
 
 public class WeatherSummary
 {

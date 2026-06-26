@@ -1,9 +1,9 @@
-﻿namespace WeatherAPI.Properties.ExtensionHandler;
+﻿namespace WeatherAPI.ExtensionHandler;
 
 public class RedisDataMissException : Exception
 {
-    public RedisDataMissException(string cityNotInRedis)
-        : base("City not in cache")
+    public RedisDataMissException()
+        : base("City is not found in cache, looking for data in server...")
     {
     }
 }

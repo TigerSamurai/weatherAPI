@@ -1,8 +1,9 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
-using WeatherAPI.Properties.ExtensionHandler;
+using WeatherAPI.ExtensionHandler;
+using WeatherAPI.Model;
 
-namespace WeatherAPI.Properties;
+namespace WeatherAPI.Service;
 
 public class WeatherService
 {
@@ -30,11 +31,10 @@ public class WeatherService
 
         if (string.IsNullOrEmpty(CheckRedisForCityAsync))
         {
-            Console.WriteLine("Not in cache. Checking database...");
-            return null;
+            throw new RedisDataMissException();
         }
 
-        WeatherSummary? foundCity = null;
+        WeatherSummary? foundCity;
         
         try
         {

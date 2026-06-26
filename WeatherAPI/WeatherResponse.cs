@@ -1,4 +1,4 @@
-﻿namespace WeatherAPI.Properties;
+﻿namespace WeatherAPI;
 
 public class RootObject
 {

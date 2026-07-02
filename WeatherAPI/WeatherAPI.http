@@ -3,4 +3,8 @@
 GET {{WeatherAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
+
+### Test a Valid City Status Check
+GET http://localhost:5167/api/weather/berlin
+Accept: application/json
 ###

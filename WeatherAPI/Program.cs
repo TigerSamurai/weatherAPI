@@ -1,8 +1,14 @@
 using StackExchange.Redis;
+using WeatherAPI.Service;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddOpenApi();
+builder.Services.AddHttpClient<WeatherService>();
+builder.Services.AddControllers();
+builder.Services.AddScoped<WeatherService>();
 
 try {
     var redis = ConnectionMultiplexer.Connect("localhost:6379");
@@ -15,6 +21,12 @@ catch (Exception ex) {
     Console.WriteLine($"Redis Connection Failed: {ex.Message}");
 }
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379";
+    options.InstanceName = "WeatherAPI_";
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -23,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.MapGet("/", () => "API is running!");
 

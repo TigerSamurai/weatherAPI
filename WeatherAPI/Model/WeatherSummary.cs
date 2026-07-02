@@ -7,6 +7,9 @@ public class WeatherSummary
     public double? MinTemp  { get; set; }
     public double? MaxTemp { get; set; }
 
+    
+    public WeatherSummary() { }
+    
     public WeatherSummary(RootObject rootObject)
     {
         CityName = rootObject.address;

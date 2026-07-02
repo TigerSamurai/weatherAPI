@@ -31,7 +31,7 @@ public class WeatherService
 
         if (string.IsNullOrEmpty(CheckRedisForCityAsync))
         {
-            throw new RedisDataMissException();
+            return null;
         }
 
         WeatherSummary? foundCity;
@@ -56,21 +56,31 @@ public class WeatherService
                         ?? throw new InvalidOperationException("API Key is missing from configuration.");
         string baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
 
-        string fullUrl = $"{baseUrl}/{city.ToLower()}?key={apiKey}&unitGroup=metric";
+        string fullUrl = $"{baseUrl}{city.ToLower()}?key={apiKey}&unitGroup=metric";
         
-        HttpResponseMessage response = await _httpClient.GetAsync(fullUrl);
+        _httpClient.Timeout = TimeSpan.FromSeconds(5);
 
-        if (response.IsSuccessStatusCode)
+        try
         {
-            Console.WriteLine("Fetching data...");
-            string rawJsonText = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<RootObject>(rawJsonText);
+            HttpResponseMessage response = await _httpClient.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Fetching data...");
+                string rawJsonText = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<RootObject>(rawJsonText);
+            }
+            else
+            {
+                Console.WriteLine($"Visual Crossing returned an error status: {response.StatusCode}");
+                return null;
+            }
         }
-        else
+        catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
         {
-            Console.WriteLine("Failed to fetch the data");
+            Console.WriteLine($"[Network Error] Visual Crossing API timed out or was unreachable for {city}. Details: {ex.Message}");
+            return null;
         }
-        return null;
     }
 
     public async Task<WeatherSummary?> GetWeatherAsync(string city)

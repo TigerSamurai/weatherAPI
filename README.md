@@ -57,5 +57,3 @@ dotnet run --project WeatherAPI
 
 GET http://localhost:5167/api/weather/berlin
 Accept: application/json
-
-### for the first run it will have a cache miss and go fetch the data from the server. On the second run it would instantly show the information.
